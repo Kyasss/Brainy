@@ -218,6 +218,7 @@ body::before {
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow: hidden;
 }
 
 /* Recuadros grandes (fila superior) */
@@ -225,13 +226,13 @@ body::before {
     margin-top: 70px;
     width: 600px;
     height: 450px;
+    position: relative;
 }
 
 /* Recuadros pequeños (fila inferior) */
 .box.small {
     display: flex;
     justify-content: space-between;
-    /* Espaciado entre el contador y el botón */
     align-items: center;
     /* Alineación vertical centrada */
     padding: 0 50px;
@@ -266,12 +267,28 @@ body::before {
     color: #000000;
 }
 
+/* Desactivación del botón Resumir */
+.resumir-button:disabled {
+    background-color: #ccc;
+    /* Fondo gris para indicar desactivado */
+    color: #666;
+    /* Color gris para el texto */
+    cursor: not-allowed;
+    /* Cambia el cursor para indicar que está desactivado */
+}
+
+/* Estilo de la advertencia en el contador de palabras */
+#word-counter.warning {
+    color: red;
+    /* Texto en rojo cuando excede las 3000 palabras */
+}
+
 .editable-text:focus {
     outline: none;
     /* Elimina el borde azul al enfocar */
     border-color: #ff8650;
     /* Cambia el color del borde al enfocar */
-    
+
 }
 
 ::-webkit-scrollbar {
@@ -402,14 +419,13 @@ textarea.view-only-text {
     font-family: 'Questrial', sans-serif;
     color: black;
     background-color: white;
-    overflow-y: auto;
+    overflow-y: scroll;
     text-align: justify;
     line-height: 1.4;
     box-sizing: border-box;
     border: none;
     border-radius: 10px;
     resize: none;
-    /* Evita el redimensionamiento */
 }
 
 /* Estilo para placeholder en editable-text */
@@ -419,10 +435,16 @@ textarea.editable-text::placeholder {
     font-style: italic;
 }
 
-/* Estilo adicional para view-only-text */
 textarea.view-only-text {
-    pointer-events: none;
+    pointer-events: auto;
+    /* Permite interacciones, pero no edición */
+    user-select: text;
+    /* Permite seleccionar el texto */
     color: black;
     background-color: white;
-    /* Evitar que el texto parezca editable */
+    /* Evita la edición del texto */
+    border: none;
+    outline: none;
+    resize: none;
+    /* Evita cambiar el tamaño del campo de texto */
 }

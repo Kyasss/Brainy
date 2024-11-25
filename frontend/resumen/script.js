@@ -4,7 +4,7 @@ const API_KEY = 'AIzaSyBLTkBVW4xKCtuPw5Oxdy9etL5-P9PEjww';
 const genAI = new GoogleGenerativeAI(API_KEY);
 
 // Rol
-const rolePrompt = "Eres un asistente que ayuda a resumir textos de manera clara y precisa.";
+const rolePrompt = "Eres un asistente especializado en resumir textos de manera clara, precisa y concisa, manteniendo la esencia y los puntos clave del contenido original. Tu tarea es identificar la información más relevante, eliminar redundancias y asegurar que el resumen sea fácil de entender sin perder detalles importantes."
 
 // Referencias a elementos del DOM
 const slider = document.getElementById('slider');
@@ -16,7 +16,6 @@ const wordCounter2 = document.getElementById('word-counter-2');
 const copyButton = document.getElementById('copy-button');
 const copyFeedback = document.getElementById('copy-feedback');
 const resumirButton = document.getElementById('resumir-button');
-let value = 0;
 
 // Configuración
 const maxWords = 3000;
@@ -46,7 +45,6 @@ slider.addEventListener('input', (event) => {
 
 slider.addEventListener('input', (event) => {
     resumenLongitud = event.target.value; // Actualiza la longitud
-    getNumber(resumenLongitud);
     // Mostrar visualmente el porcentaje de resumen ajustado (opcional)
     copyFeedback.textContent = `Longitud del resumen ajustada al ${resumenLongitud}%`;
     copyFeedback.style.opacity = '1';
@@ -71,10 +69,13 @@ editableText.addEventListener('input', () => {
     const wordCount = countWords(editableText.value);
     wordCounter.textContent = `${wordCount} / ${maxWords}`;
 
+    // Desactivar el botón si el número de palabras es mayor a 3000
     if (wordCount > maxWords) {
         wordCounter.classList.add('warning');
+        resumirButton.disabled = true; // Desactivar botón
     } else {
         wordCounter.classList.remove('warning');
+        resumirButton.disabled = false; // Activar botón
     }
 });
 
@@ -126,22 +127,37 @@ copyButton.addEventListener('click', () => {
         });
 });
 
-function getNumber(number) {
-    return value == number;
+// Función para mostrar el feedback de error o éxito
+function showFeedback(message, duration = 4000) {
+    copyFeedback.textContent = message;
+    copyFeedback.style.opacity = '1';
+    copyFeedback.style.visibility = 'visible';
+
+    setTimeout(() => {
+        copyFeedback.style.opacity = '0';
+        copyFeedback.style.visibility = 'hidden';
+    }, duration);
+}
+
+function animateText(element, text, speed = 50) {
+    let index = 0;
+    element.value = '';  // Limpiar el campo antes de empezar la animación
+
+    const interval = setInterval(() => {
+        if (index < text.length) {
+            element.value += text.charAt(index);
+            index++;
+        } else {
+            clearInterval(interval); // Detener la animación cuando el texto esté completo
+        }
+    }, speed);
 }
 
 // Evento para resumir texto al hacer clic en el botón
 resumirButton.addEventListener('click', async () => {
     const inputText = editableText.value.trim();
     if (!inputText) {
-        copyFeedback.textContent = 'El área de texto está vacía.';
-        copyFeedback.style.opacity = '1';
-        copyFeedback.style.visibility = 'visible';
-
-        setTimeout(() => {
-            copyFeedback.style.opacity = '0';
-            copyFeedback.style.visibility = 'hidden';
-        }, 2000);
+        showFeedback('El área de texto está vacía.');
         return;
     }
 
@@ -150,32 +166,29 @@ resumirButton.addEventListener('click', async () => {
     try {
         const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-latest" });
 
-        let fullPrompt = '';
-        alert(value);
+        // Ajustar el tipo de resumen según el valor de `value`
+        let fullPrompt;
 
-        if (value >= 0 && value <= 30) {
-            fullPrompt = `${rolePrompt}\n\nEl resumen debe ser corto sin exceder la longitud del texto original, Texto:\n${inputText} \n\nResumen:`;
-        } else if (value >= 31 && value <= 60) {
-            fullPrompt = `${rolePrompt}\n\nEl resumen debe ser medio sin exceder la longitud del texto original, Texto: \n${inputText}\n\nResumen:`;
+        if (resumenLongitud >= 0 && resumenLongitud <= 30) {
+            // Resumen corto
+            fullPrompt = `${rolePrompt}\n\nTu tarea es generar un resumen **muy breve y conciso** que capture solo las ideas principales del texto original. El resumen debe ser lo más preciso posible y no debe extenderse más allá de lo necesario. No debe exceder la longitud del texto original. Texto:\n${inputText}\n\nResumen:`;
+        } else if (resumenLongitud >= 31 && resumenLongitud <= 60) {
+            // Resumen medio
+            fullPrompt = `${rolePrompt}\n\nGenera un resumen **moderadamente detallado**, que cubra las ideas principales y explique los puntos clave del texto de manera clara. El resumen debe ser informativo, pero aún debe ser relativamente breve, sin extenderse más allá de lo necesario. No debe exceder la longitud del texto original. Texto:\n${inputText}\n\nResumen:`;
         } else {
-            fullPrompt = `${rolePrompt}\n\nEl resumen debe ser largo sin exceder la longitud del texto original, Texto: \n${inputText}\n\nResumen:`;
+            // Resumen largo
+            fullPrompt = `${rolePrompt}\n\nTu tarea es generar un resumen **detallado y exhaustivo**, que cubra todos los puntos importantes del texto original, incluyendo ejemplos y explicaciones cuando sea necesario. El resumen debe ser claro y completo, pero no debe exceder la longitud del texto original. Texto:\n${inputText}\n\nResumen:`;
         }
 
+        // Generar el contenido con el modelo
         const result = await model.generateContent(fullPrompt);
-        const response = await result.response;
-        const responseText = await response.text();
+        const responseText = await result.response.text();
 
-        viewOnlyText.value = responseText;
+        animateText(viewOnlyText, responseText, 8); // 50ms de retraso entre cada letra
+
     } catch (error) {
         console.error('Error al generar el resumen:', error);
-        copyFeedback.textContent = 'Hubo un error al generar el resumen.';
-        copyFeedback.style.opacity = '1';
-        copyFeedback.style.visibility = 'visible';
-
-        setTimeout(() => {
-            copyFeedback.style.opacity = '0';
-            copyFeedback.style.visibility = 'hidden';
-        }, 2000);
+        showFeedback('Hubo un error al generar el resumen.');
     } finally {
         resumirButton.disabled = false;
     }

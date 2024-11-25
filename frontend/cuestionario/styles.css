@@ -1,0 +1,241 @@
+/* Fondo animado en tonos anaranjados */
+body {
+    margin: 0;
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+    font-family: 'Questrial', sans-serif;
+}
+
+body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200%;
+    height: 200%;
+    background: conic-gradient(#e0f7e9, #bdecd2, #9ee3c2, #83d7ae, #69cc9b, #b4e9d6, #e0f7e9);
+    filter: blur(200px);
+    animation: backgroundMovement 20s ease-in-out infinite;
+    z-index: -1;
+}
+
+@keyframes backgroundMovement {
+    0% {
+        transform: scale(1) translate(0, 0);
+    }
+
+    25% {
+        transform: scale(1.05) translate(-5%, -5%);
+    }
+
+    50% {
+        transform: scale(1.1) translate(5%, 5%);
+    }
+
+    75% {
+        transform: scale(1.05) translate(-5%, 5%);
+    }
+
+    100% {
+        transform: scale(1) translate(0, 0);
+    }
+}
+
+/* Contenedor principal */
+.container {
+    margin: 0 auto;
+    max-width: 1500px;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Cabecera */
+.header {
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    height: 190px;
+    position: fixed;
+    width: 100%;
+    box-sizing: border-box;
+    z-index: 10;
+}
+
+.header .container {
+    display: relative;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.logo {
+    position: relative;
+    font-size: 40px;
+    color: black;
+    padding: 15px 35px;
+    z-index: 1;
+    transition: color 0.3s ease;
+}
+
+.logo:hover {
+    color: #51a855;
+}
+
+.logo::before {
+    content: "";
+    position: absolute;
+    top: -180px;
+    left: 0;
+    width: 100%;
+    height: calc(100% + 200px);
+    background: white;
+    border-radius: 35px;
+    z-index: -1;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+}
+
+.logo:hover::before {
+    background-color: #e7ffef;
+}
+
+.nav ul {
+    list-style: none;
+    display: flex;
+    gap: 50px;
+    margin: 0;
+    padding: 0;
+}
+
+.nav ul li a {
+    text-decoration: none;
+    color: black;
+    font-size: 19px;
+    position: relative;
+    transition: color 0.3s ease;
+    padding: 10px 15px;
+}
+
+.nav ul li a:hover {
+    color: #1db129;
+}
+
+.main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(120vh - 190px);
+    text-align: center;
+}
+
+.study-box {
+    width: 80%;
+    max-width: 850px;
+}
+
+.study-box h1 {
+    font-size: 45px;
+    margin-bottom: 100px;
+    color: #000000;
+}
+
+.study-box textarea {
+    width: 90%;
+    height: 80px;
+    border: none;
+    /* Sin bordes */
+    border-radius: 18px;
+    /* Esquinas redondeadas */
+    padding: 18px;
+    font-size: 1.1rem;
+    resize: none;
+    font-family: 'Questrial', sans-serif;
+    outline: none;
+    /* Sin contorno al enfocar */
+    background-color: #f8f8f8;
+    /* Fondo neutro */
+    color: #000;
+    /* Texto negro */
+    transition: transform 0.2s ease;
+    /* Transición de tamaño */
+    line-height: 1.2;
+}
+
+/* Efecto minimalista al enfocar */
+.study-box textarea:focus {
+    transform: scale(1.03);
+    /* Aumento menor */
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    margin-top: 35px;
+}
+
+.round-button {
+    width: 60px;
+    height: 60px;
+    border: none;
+    border-radius: 50%;
+    background-color: #66bb6a;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.round-button:hover {
+    background-color: #81c784;
+    transform: scale(1.1);
+}
+
+.round-button:active {
+    transform: scale(0.95);
+}
+
+.button-icon {
+    width: 24px;
+    height: 24px;
+    filter: invert(100%);
+}
+
+svg {
+    width: 24px;
+    height: 24px;
+    fill: white;
+    /* Ícono blanco */
+}
+
+/* Estilo para la barra de desplazamiento */
+::-webkit-scrollbar {
+    width: 6px;
+    /* Más delgada */
+}
+
+::-webkit-scrollbar-thumb {
+    background: #d3d3d3;
+    /* Color neutro */
+    border-radius: 18px;
+    /* Redondeada */
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #b0b0b0;
+    /* Color más oscuro al pasar el mouse */
+}
+
+::-webkit-scrollbar-track {
+    background: #f8f8f8;
+    /* Fondo igual al textarea */
+    border-radius: 18px;
+    /* Redondeada */
+    margin: 4px;
+    /* Margen para incrustarla dentro */
+}
