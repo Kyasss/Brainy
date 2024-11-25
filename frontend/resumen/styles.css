@@ -1,0 +1,428 @@
+/* Fondo animado en tonos anaranjados */
+body {
+    margin: 0;
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+    font-family: 'Questrial', sans-serif;
+}
+
+body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200%;
+    height: 200%;
+    background: conic-gradient(#ffe6cc,
+            /* Melón pastel */
+            #ffccb3,
+            /* Durazno claro */
+            #ffb399,
+            /* Naranja suave */
+            #ff9980,
+            /* Coral claro */
+            #ff8066,
+            /* Mandarina */
+            #ff9980,
+            /* Coral claro */
+            #ffe6cc
+            /* Repetimos para cerrar */
+        );
+    filter: blur(200px);
+    animation: backgroundMovement 20s ease-in-out infinite;
+    z-index: -1;
+}
+
+/* Nueva animación */
+@keyframes backgroundMovement {
+    0% {
+        transform: scale(1) translate(0, 0);
+    }
+
+    25% {
+        transform: scale(1.05) translate(-5%, -5%);
+    }
+
+    50% {
+        transform: scale(1.1) translate(5%, 5%);
+    }
+
+    75% {
+        transform: scale(1.05) translate(-5%, 5%);
+    }
+
+    100% {
+        transform: scale(1) translate(0, 0);
+    }
+}
+
+/* Contenedor principal */
+.container {
+    margin: 0 auto;
+    max-width: 1500px;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Cabecera */
+.header {
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    height: 190px;
+    position: fixed;
+    width: 100%;
+    box-sizing: border-box;
+    z-index: 10;
+    /* Aumentar el z-index para que el header esté siempre por encima */
+}
+
+.header .container {
+    display: relative;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.logo {
+    position: relative;
+    font-size: 40px;
+    color: black;
+    padding: 15px 35px;
+    z-index: 1;
+    transition: color 0.3s ease;
+    /* Transición suave para color y transformación */
+}
+
+.logo:hover {
+    color: #ff8650;
+    /* Cambia el color del texto al pasar el mouse */
+}
+
+.logo::before {
+    content: "";
+    position: absolute;
+    top: -180px;
+    left: 0;
+    width: 100%;
+    height: calc(100% + 200px);
+    background: white;
+    border-radius: 35px;
+    z-index: -1;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+}
+
+.logo:hover::before {
+    background-color: #fff1e7;
+}
+
+.nav ul {
+    list-style: none;
+    display: flex;
+    gap: 50px;
+    /* Separación entre elementos */
+    margin: 0;
+    padding: 0;
+}
+
+.nav ul li a {
+    text-decoration: none;
+    color: black;
+    /* Texto negro */
+    font-size: 19px;
+    position: relative;
+    transition: color 0.3s ease;
+    padding: 10px 15px;
+    /* Espaciado interno */
+}
+
+.nav ul li a:hover {
+    color: #ff8650;
+    /* Cambia a morado al pasar el mouse */
+}
+
+/* Contenedor del slider */
+.slider-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 120px 0;
+    gap: 15px;
+    position: fixed;
+    top: 100px;
+    /* Ajusta según la posición del header */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    font-size: 18px;
+    font-family: 'Questrial', sans-serif;
+    color: black;
+}
+
+/* Estilo del slider */
+#slider {
+    -webkit-appearance: none;
+    width: 350px;
+    height: 7px;
+    background: #ffffff;
+    border-radius: 8px;
+    outline: none;
+    transition: background 0.3s ease;
+}
+
+#slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background: white;
+    border-radius: 50%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+#slider::-webkit-slider-thumb:hover {
+    background: #ff8650;
+    transform: scale(1.1);
+}
+
+/* Contenedor para los recuadros */
+.center-boxes {
+    display: flex;
+    flex-wrap: wrap;
+    /* Permite que los elementos se ajusten en varias filas */
+    justify-content: center;
+    align-items: center;
+    gap: 10px 25px;
+    /* Espaciado entre recuadros */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 70%;
+    /* Ajusta según sea necesario */
+}
+
+/* Estilo para los recuadros */
+.box {
+    background-color: white;
+    border-radius: 20px;
+    /* Bordes redondeados */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    /* Sombra ligera */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Recuadros grandes (fila superior) */
+.box.large {
+    margin-top: 70px;
+    width: 600px;
+    height: 450px;
+}
+
+/* Recuadros pequeños (fila inferior) */
+.box.small {
+    display: flex;
+    justify-content: space-between;
+    /* Espaciado entre el contador y el botón */
+    align-items: center;
+    /* Alineación vertical centrada */
+    padding: 0 50px;
+    /* Espaciado interno lateral */
+    box-sizing: border-box;
+    /* Asegura que el padding no desborde el cuadro */
+    width: 600px;
+    height: 50px;
+}
+
+/* Botón Resumir */
+.resumir-button {
+    position: fixed;
+    bottom: 110px;
+    /* Ajusta la altura para que quede justo debajo de los recuadros */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #000000;
+    color: #ffffff;
+    font-family: 'Questrial', sans-serif;
+    font-size: 24px;
+    padding: 10px 40px;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.resumir-button:hover {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+.editable-text:focus {
+    outline: none;
+    /* Elimina el borde azul al enfocar */
+    border-color: #ff8650;
+    /* Cambia el color del borde al enfocar */
+    
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+    /* Ancho de la barra vertical */
+    height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #faaf8c;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #ff9d4c;
+}
+
+::-webkit-scrollbar-track {
+    background: #f0f0f0;
+    border-radius: 4px;
+}
+
+#word-counter {
+    font-size: 18px;
+    font-family: 'Questrial', sans-serif;
+    color: rgb(177, 177, 177);
+    /* Color inicial */
+    text-align: left;
+    line-height: normal;
+    /* Ajusta la alineación con el botón */
+}
+
+#word-counter.warning {
+    color: red;
+    /* Color cuando supera 3000 palabras */
+}
+
+.clear-button {
+    background-color: #ffffff;
+    /* Fondo blanco */
+    color: rgb(177, 177, 177);
+    /* Texto naranja */
+    /* Borde naranja */
+    font-size: 18px;
+    font-style: normal;
+    /* Tamaño de fuente */
+    cursor: pointer;
+    /* Manito al pasar el mouse */
+    transition: color 0.3s ease;
+    /* Transición suave */
+    border: none
+}
+
+.clear-button:hover {
+    /* Fondo naranja al pasar el mouse */
+    color: #ff8650;
+    /* Texto blanco */
+}
+
+#word-counter-2 {
+    font-size: 18px;
+    font-family: 'Questrial', sans-serif;
+    color: rgb(177, 177, 177);
+    /* Color inicial */
+    text-align: left;
+    line-height: normal;
+    /* Ajusta la alineación con el botón */
+}
+
+.copy-button {
+    background-color: #ffffff;
+    /* Fondo blanco */
+    color: rgb(177, 177, 177);
+    /* Texto naranja */
+    /* Borde naranja */
+    font-size: 18px;
+    font-style: normal;
+    /* Tamaño de fuente */
+    cursor: pointer;
+    /* Manito al pasar el mouse */
+    transition: color 0.3s ease;
+    /* Transición suave */
+    border: none
+}
+
+.copy-button:hover {
+    /* Fondo naranja al pasar el mouse */
+    color: #ff8650;
+    /* Texto blanco */
+}
+
+.copy-feedback {
+    position: fixed;
+    /* Fijo en la pantalla */
+    bottom: 20px;
+    /* Separado del borde inferior */
+    right: 20px;
+    /* Separado del borde derecho */
+    background-color: #ffffff;
+    /* Fondo naranja */
+    color: rgb(0, 0, 0);
+    /* Texto blanco */
+    padding: 10px 20px;
+    /* Espaciado interno */
+    border-radius: 10px;
+    /* Bordes redondeados */
+    font-family: 'Questrial', sans-serif;
+    font-size: 14px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    /* Sombra ligera */
+    opacity: 0;
+    /* Invisible por defecto */
+    visibility: hidden;
+    /* Oculto por defecto */
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    /* Transición suave */
+    z-index: 1000;
+    /* Aparece sobre otros elementos */
+}
+
+textarea.editable-text,
+textarea.view-only-text {
+    width: 90%;
+    height: 88%;
+    padding: 10px;
+    padding-right: 25px;
+    font-size: 16px;
+    font-family: 'Questrial', sans-serif;
+    color: black;
+    background-color: white;
+    overflow-y: auto;
+    text-align: justify;
+    line-height: 1.4;
+    box-sizing: border-box;
+    border: none;
+    border-radius: 10px;
+    resize: none;
+    /* Evita el redimensionamiento */
+}
+
+/* Estilo para placeholder en editable-text */
+textarea.editable-text::placeholder {
+    color: rgb(200, 200, 200);
+    /* Color para diferenciar el placeholder */
+    font-style: italic;
+}
+
+/* Estilo adicional para view-only-text */
+textarea.view-only-text {
+    pointer-events: none;
+    color: black;
+    background-color: white;
+    /* Evitar que el texto parezca editable */
+}

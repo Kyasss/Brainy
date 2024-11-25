@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resumen</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Questrial&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../resumen/styles.css">
+</head>
+
+<body>
+    <header class="header">
+        <div class="container">
+            <!-- Logo de la empresa -->
+            <div class="logo">
+                Brainy.
+            </div>
+            <nav class="nav">
+                <ul>
+                    <li><a href="../home/index.html">Home</a></li> <!-- Ruta relativa que sube un nivel -->
+                    <li><a href="#">Resumen</a></li>
+                    <li><a href="/Cuestionario/Cuestionario.html">Cuestionario</a></li>
+                    <li><a href="#">Acerca de</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Contenedor del slider -->
+    <div class="slider-container">
+        <label for="slider">Corto</label>
+        <input type="range" id="slider" min="0" max="100" value="50">
+        <label for="slider">Largo</label>
+    </div>
+
+    <div class="center-boxes">
+
+        <div class="box large">
+            <textarea class="editable-text" placeholder="Escribe tu texto aquí..."></textarea>
+        </div>
+        <div class="box large">
+            <textarea class="view-only-text" placeholder="Este es un texto solo para visualizar." readonly></textarea>
+        </div>
+
+        <div class="box small">
+            <div id="word-counter">0 / 3000</div>
+            <button id="clear-button" class="clear-button">Limpiar</button>
+        </div>
+        <div class="box small">
+            <div id="word-counter-2">0 Palabras</div>
+            <button id="copy-button" class="copy-button">Copiar</button>
+        </div>
+        <div id="copy-feedback" class="copy-feedback">Texto copiado</div>
+    </div>
+
+    <button id="resumir-button" class="resumir-button">Resumir</button>
+
+    <script type="importmap">
+        {
+          "imports": {
+            "@google/generative-ai": "https://esm.run/@google/generative-ai"
+          }
+        }
+    </script>
+
+    <script type="module" src="/Resumen/script.js"></script>
+</body>
+
+</html>
