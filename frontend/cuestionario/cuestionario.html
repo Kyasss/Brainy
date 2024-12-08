@@ -32,27 +32,28 @@
             <h1>¿Sobre qué tema quieres estudiar?</h1>
             <textarea placeholder="Escribe aquí tu tema..."></textarea>
             <div class="button-container">
-
                 <!-- Botón de Subir Archivos -->
-                <button class="round-button">
+                <button id="load-button" class="round-button">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="24px" height="24px">
                         <path
                             d="M19.35 10.04c.63-.85.99-1.91.99-3.04 0-2.76-2.24-5-5-5-1.78 0-3.29.93-4.14 2.29C10.53 4.09 9.31 4 8.18 4 5.2 4 3 6.24 3 9c0 1.64.79 3.09 2.04 4H4c-1.1 0-2 .9-2 2s.9 2 2 2h16c1.1 0 2-.9 2-2s-.9-2-2-2h-1.73c.39-.73.58-1.54.58-2.38-.01-.87-.25-1.68-.7-2.37zM12 6l4 4h-3v4h-2v-4H8l4-4z" />
                     </svg>
                 </button>
+                <!-- Input oculto para cargar archivos PDF -->
+                <input type="file" id="pdf-input" style="display: none;" accept="application/pdf">
 
                 <!-- Botón de Enviar -->
-                <button class="round-button">
+                <button id="send-button" class="round-button" data-action="generate-quiz">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="24px" height="24px">
                         <path d="M2,21L23,12L2,3v7l15,2L2,14V21z" />
                     </svg>
                 </button>
-
             </div>
         </div>
     </main>
 
-    <script src="/Cuestionario/script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.15.349/pdf.min.js"></script>
+    <script type="module" src="../cuestionario/script.js"></script>
 </body>
 
 </html>

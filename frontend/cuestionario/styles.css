@@ -239,3 +239,61 @@ svg {
     margin: 4px;
     /* Margen para incrustarla dentro */
 }
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+}
+
+.custom-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #f8f8f8;
+    border-radius: 18px;
+    padding: 30px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    z-index: 1000;
+    max-width: 400px;
+    width: 90%;
+    font-family: 'Questrial', sans-serif;
+}
+
+.modal-content h2 {
+    color: #000;
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+.modal-content p {
+    color: #333;
+    margin-bottom: 30px;
+    font-size: 18px;
+}
+
+.modal-content #modal-close {
+    background-color: #66bb6a;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-family: 'Questrial', sans-serif;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.modal-content #modal-close:hover {
+    background-color: #81c784;
+}
+
+.modal-content #modal-close:active {
+    transform: scale(0.95);
+}

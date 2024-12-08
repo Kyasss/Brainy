@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Preguntas</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link href="https://fonts.googleapis.com/css2?family=Questrial&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../cuestionario/stylesPreguntas.css">
+</head>
+
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                Brainy.
+            </div>
+            <nav class="nav">
+                <ul>
+                    <li><a href="../home/index.html">Home</a></li>
+                    <li><a href="../resumen/resumen.html">Resumen</a></li>
+                    <li><a href="../cuestionario/cuestionario.html">Cuestionario</a></li>
+                    <li><a href="#">Acerca de</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="quiz-container">
+        <div id="progress-bar">
+            <div id="progress"></div>
+        </div>
+
+        <div class="question" id="question-text">
+            ¿Cuál es la capital de Francia?
+        </div>
+        <div class="options">
+            <div class="option" data-option="A">A</div>
+            <div class="option" data-option="B">B</div>
+            <div class="option" data-option="C">C</div>
+            <div class="option" data-option="D">D</div>
+        </div>
+
+        <div class="navigation">
+            <button class="btn" id="prev-btn" disabled>Anterior</button>
+            <button class="btn" id="next-btn">Siguiente</button>
+        </div>
+    </div>
+
+    <script type="importmap">
+            {
+              "imports": {
+                "@google/generative-ai": "https://esm.run/@google/generative-ai"
+              }
+            }
+     </script>
+
+    <script type="module" src="../cuestionario/scriptPreguntas.js"></script>
+</body>
+
+</html>
