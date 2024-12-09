@@ -33,7 +33,6 @@ document.addEventListener('DOMContentLoaded', () => {
     sendButton.addEventListener('click', () => {
         const topic = textarea.value.trim();
         if (topic !== '') {
-            // Guardar el tema en el almacenamiento local para usarlo en preguntas.html
             localStorage.setItem('selectedTopic', topic);
             window.location.href = 'preguntas.html';
         } else {
@@ -56,7 +55,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 const numPages = pdf.numPages;
                 let processedPages = 0;
 
-                // Recorrer todas las páginas del PDF
                 for (let pageNum = 1; pageNum <= numPages; pageNum++) {
                     pdf.getPage(pageNum).then((page) => {
                         page.getTextContent().then((textContent) => {
@@ -65,12 +63,9 @@ document.addEventListener('DOMContentLoaded', () => {
                             });
                             processedPages++;
 
-                            // Cuando todos los textos estén procesados
                             if (processedPages === numPages) {
                                 textarea.value = fullText;
-                                // Guardar el texto en localStorage
                                 localStorage.setItem('selectedTopic', fullText);
-                                // Redirigir a preguntas.html
                                 window.location.href = 'preguntas.html';
                             }
                         });
@@ -81,12 +76,10 @@ document.addEventListener('DOMContentLoaded', () => {
         reader.readAsArrayBuffer(file);
     };
 
-    // Abrir el selector de archivos al hacer clic en el botón
     loadButton.addEventListener('click', () => {
         pdfInput.click();
     });
 
-    // Cargar el archivo seleccionado
     pdfInput.addEventListener('change', (event) => {
         const file = event.target.files[0];
         if (file && file.type === 'application/pdf') {

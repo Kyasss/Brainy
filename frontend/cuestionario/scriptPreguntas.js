@@ -27,7 +27,6 @@ class GeminiQuizGenerator {
             const [quizResult, summary] = await Promise.all([quizPromise, summaryPromise]);
             const quizText = quizResult.response.text();
 
-            // Guardar el resumen en localStorage
             localStorage.setItem('topicSummary', summary.response.text().trim());
 
             return this.parseQuizResponse(quizText);
@@ -57,11 +56,11 @@ class GeminiQuizGenerator {
                 return quizData.questions;
             } else {
                 console.error("El cuestionario generado tiene menos de 10 preguntas, generando preguntas adicionales.");
-                return this.createFallbackQuiz("Topic", 10);  // Generar 10 preguntas de respaldo
+                return this.createFallbackQuiz("Topic", 10);
             }
         } catch (error) {
             console.error("Error parsing JSON:", error);
-            return this.createFallbackQuiz("Topic", 10);  // Generar 10 preguntas de respaldo en caso de error
+            return this.createFallbackQuiz("Topic", 10);
         }
     }
 
@@ -120,7 +119,7 @@ REQUISITOS ADICIONALES:
     }
 }
 
-// Quiz Application UI and Logic
+
 class QuizApplication {
     constructor(quizGenerator) {
         this.quizGenerator = quizGenerator;
@@ -135,11 +134,10 @@ class QuizApplication {
         this.nextBtn = document.getElementById('next-btn');
         this.progressBar = document.getElementById('progress');
 
-        // Contenedor de carga (spinner)
         this.loadingContainer = document.createElement('div');
         this.loadingContainer.classList.add('loading-container');
-        this.loadingContainer.innerHTML = '<div class="spinner"></div>'; // Spinner
-        document.body.appendChild(this.loadingContainer); // Agregar al body
+        this.loadingContainer.innerHTML = '<div class="spinner"></div>';
+        document.body.appendChild(this.loadingContainer);
 
         this.currentQuestionIndex = 0;
         this.questions = [];
@@ -164,14 +162,12 @@ class QuizApplication {
         }
 
         this.questionText.textContent = "Generando cuestionario...";
-        // Mostrar el spinner mientras se genera el cuestionario
         this.loadingContainer.style.display = 'flex';
 
         this.quizGenerator.generateQuiz(topic)
             .then(generatedQuestions => {
-                // Ocultar el spinner una vez generadas las preguntas
                 this.loadingContainer.style.display = 'none';
-                
+
                 if (!generatedQuestions || generatedQuestions.length === 0) {
                     throw new Error('No se generaron preguntas');
                 }
@@ -192,11 +188,9 @@ class QuizApplication {
         const selectedOption = event.target;
         const selectedAnswerText = selectedOption.textContent;
 
-        // Marcar la opción seleccionada
         this.options.forEach(opt => opt.classList.remove('selected'));
         selectedOption.classList.add('selected');
 
-        // Buscar la opción en la respuesta y almacenar el índice correspondiente
         const selectedIndex = Array.from(this.options).findIndex(option => option.textContent === selectedAnswerText);
 
         this.userAnswers[this.currentQuestionIndex] = selectedIndex;
@@ -249,7 +243,6 @@ class QuizApplication {
     }
 
     showResults() {
-        // Verificar que haya preguntas y respuestas
         if (!this.questions || this.questions.length === 0) {
             console.error('No hay preguntas para mostrar resultados');
             return;
@@ -265,9 +258,8 @@ class QuizApplication {
             if (this.userAnswers[index] === null) return false;
 
             const selectedAnswerIndex = this.userAnswers[index];
-            const selectedOption = question.answers[selectedAnswerIndex];  // Obtener la opción seleccionada por índice
+            const selectedOption = question.answers[selectedAnswerIndex];
 
-            // Verificar si la respuesta seleccionada es correcta
             return selectedOption && selectedOption.isCorrect === true;
         }).length;
     }
@@ -282,30 +274,28 @@ class QuizApplication {
         const modal = document.createElement('div');
         modal.className = 'custom-modal';
         modal.innerHTML = `
-            <div class="modal-content">
-                <h2>Resultados del Cuestionario</h2>
-                <p>Tema de estudio: ${topicSummary}</p>
-                <p>Preguntas correctas: ${correctAnswers} de ${this.questions.length}</p>
-                <button id="modal-close">Cerrar</button>
-            </div>
-        `;
+        <div class="modal-content">
+            <h2>Resultados del Cuestionario</h2>
+            <p>Tema de estudio: ${topicSummary}</p>
+            <p>Preguntas correctas: ${correctAnswers} de ${this.questions.length}</p>
+            <button id="modal-close">Cerrar</button>
+        </div>
+    `;
 
         document.body.appendChild(overlay);
         document.body.appendChild(modal);
 
         document.getElementById('modal-close').addEventListener('click', () => {
-            document.body.removeChild(overlay);
-            document.body.removeChild(modal);
+            window.location.href = 'cuestionario.html';
         });
 
         overlay.addEventListener('click', () => {
-            document.body.removeChild(overlay);
-            document.body.removeChild(modal);
+            window.location.href = 'cuestionario.html';
         });
     }
+
 }
 
-// Application Initialization
 document.addEventListener('DOMContentLoaded', () => {
     const API_KEY = 'AIzaSyBLTkBVW4xKCtuPw5Oxdy9etL5-P9PEjww';
     const quizGenerator = new GeminiQuizGenerator(API_KEY);

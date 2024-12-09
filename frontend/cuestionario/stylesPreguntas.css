@@ -342,7 +342,6 @@ body::before {
     transform: scale(0.95);
 }
 
-/* Estilos para el contenedor de carga */
 .loading-container {
     position: fixed;
     top: 0;
@@ -355,23 +354,17 @@ body::before {
     align-items: center;
     z-index: 1000;
     display: none;
-    /* Inicialmente oculto */
 }
 
-/* Estilos para el spinner */
 .spinner {
     border: 8px solid rgba(255, 255, 255, 0.3);
-    /* Fondo del spinner */
     border-top: 8px solid #51a855;
-    /* Color del spinner */
     border-radius: 50%;
     width: 50px;
     height: 50px;
     animation: spin 1.5s linear infinite;
-    /* Animación de rotación */
 }
 
-/* Animación de rotación del spinner */
 @keyframes spin {
     0% {
         transform: rotate(0deg);
